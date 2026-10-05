@@ -1,0 +1,10 @@
+name: Sumo
+version: ${project.version}
+main: com.benzimmer123.sumo.Sumo
+authors: [benzimmer123]
+api-version: '26.2'
+description: Updated Paper 26.2 build of Benzimmer's abandoned Sumo plugin.
+softdepend: [PlaceholderAPI, MVdWPlaceholderAPI, Magic]
+commands:
+    sumo:
+     description: All of this plugins commands.

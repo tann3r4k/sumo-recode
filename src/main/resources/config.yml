@@ -1,0 +1,68 @@
+############################################################
+# +------------------------------------------------------+ #
+# |                                                      | #
+# |               Sumo Plugin Configuration              | #
+# |                                                      | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Information:
+
+# Author: Benzimmer
+# Profile: http://tiny.cc/benzimmer
+# Discord Link: https://discord.gg/fuffySb
+# Resource Link: http://tiny.cc/sumoplugin
+
+############################################################
+#                                                          #
+#                      General Section                     #
+#                                                          #
+############################################################
+
+QUEUE_TIME: 10 # Time players have to queue
+MAXIMUM_PLAYERS: 32 # Maximum amount of players that can join the Sumo
+  
+# List of timezones can be found here https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+# Any spaces in a timezone should be used as an "_"
+
+CURRENT_TIMEZONE: Europe/London
+  
+COMBAT_TAG: # Use this to prevent players from joining the Sumo while combat tagged
+  ENABLED: true
+  SECONDS: 30
+  
+FORCE_LEAVE: # Force Sumo leave when a player teleports
+  ON_TELEPORT: true
+  
+WHITE_LISTED_CMDS: # Commands that are allowed during Sumo
+- /example command
+  
+FORCE_EMPTY_INV_ON_JOIN: false # Set this to false to clear and save players inventories until after the event
+  
+SPECTATE_MODE: true # Enable this to send players into spectate mode until the end of the match
+  
+BROADCAST_TO_SERVER: false # Set this to true to broadcast join/leave messages across the server
+  
+BROADCAST_TIMES: # Times that will be broadcast before the Sumo starts
+- 30
+- 25
+- 20
+- 15
+- 10
+  
+SEARCH_FOR_UPDATES: true # Search for updates on startup
+  
+############################################################
+#                                                          #
+#                      Reward Section                      #
+#                                                          #
+############################################################
+  
+REWARDS:
+
+  RUN_COMMANDS: # Commands to be run when a player wins Sumo
+  - /example %player% %world%
+  
+  VAULT: # Use vault to reward players when winning Sumo
+    ENABLED: false
+    AMOUNT: 1000
