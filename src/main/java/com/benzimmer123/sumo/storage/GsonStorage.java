@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,8 +20,12 @@ import com.google.gson.GsonBuilder;
 
 public final class GsonStorage {
 	
+	public static Gson gson() {
+		return new GsonBuilder().registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter()).setPrettyPrinting().create();
+	}
+
 	public static <T> void serialize(T type, String filePath, String setterValue) {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Gson gson = gson();
 		String jsonString = gson.toJson(type);
 		File file = new File(Sumo.getInstance().getDataFolder(), filePath);
 
@@ -47,7 +52,7 @@ public final class GsonStorage {
 		File file = new File(filePath);
 		FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
 		String jsonString = fileConfig.getString(setterValue);
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Gson gson = gson();
 		T object = gson.fromJson(jsonString, type);
 		return object;
 	}

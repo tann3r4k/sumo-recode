@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 
@@ -15,6 +16,7 @@ import com.benzimmer123.sumo.api.objects.SumoTick;
 import com.benzimmer123.sumo.obj.TempSumoPlayer;
 import com.benzimmer123.sumo.obj.serial.MemorySumoArena;
 import com.benzimmer123.sumo.obj.serial.MemorySumoTick;
+import com.benzimmer123.sumo.storage.ArenaFiles;
 import com.benzimmer123.sumo.storage.GsonStorage;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -38,10 +40,21 @@ public class SumoHandler {
 
 		sumoTick = new MemorySumoTick();
 
-		for (File file : new File(Sumo.getInstance().getDataFolder() + "/sumos").listFiles()) {
-			SumoArena sumo = GsonStorage.deserialize(MemorySumoArena.class, file.getPath(), "sumo");
-			if (sumo != null) {
-				addSumo(sumo);
+		File[] files = new File(Sumo.getInstance().getDataFolder(), "sumos").listFiles();
+		if (files == null) {
+			return;
+		}
+		for (File file : files) {
+			if (!ArenaFiles.isArenaSave(file.getName())) {
+				continue;
+			}
+			try {
+				SumoArena sumo = GsonStorage.deserialize(MemorySumoArena.class, file.getPath(), "sumo");
+				if (sumo != null) {
+					addSumo(sumo);
+				}
+			} catch (RuntimeException ex) {
+				Sumo.getInstance().getLogger().log(Level.SEVERE, "Failed to load sumo file " + file.getName(), ex);
 			}
 		}
 	}
